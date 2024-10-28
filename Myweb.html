@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - IT Recruiter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: url('https://www.w3schools.com/w3images/bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: rgba(76, 175, 80, 0.9);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        section {
+            padding: 20px;
+            margin: 20px auto;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            max-width: 800px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            margin-bottom: 15px;
+        }
+
+        input, textarea {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        .profile-img {
+            max-width: 150px;
+            border-radius: 50%;
+            margin: 10px auto;
+            display: block;
+        }
+
+        .blog-post {
+            background: #e7e7e7;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Your Name</h1>
+        <p>IT Recruiter | Connecting Talent with Opportunity</p>
+        <nav>
+            <a href="#about">About</a>
+            <a href="#resume">Resume</a>
+            <a href="#upwork">Upwork</a>
+            <a href="#contact">Contact</a>
+            <a href="#blog">Blog</a>
+        </nav>
+    </header>
+
+    <!-- Profile Picture Upload -->
+    <section>
+        <h2>Profile Picture</h2>
+        <input type="file" id="profilePicInput" accept="image/*">
+        <img id="profilePic" class="profile-img" src="" alt="Profile Picture">
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2>About Me</h2>
+        <textarea id="aboutText" placeholder="Write about yourself here..."></textarea>
+        <button onclick="updateAbout()">Save</button>
+        <p id="aboutDisplay"></p>
+    </section>
+
+    <!-- Resume Section -->
+    <section id="resume">
+        <h2>Resume</h2>
+        <input type="file" id="resumeInput" accept="application/pdf">
+        <button onclick="uploadResume()">Upload Resume</button>
+        <a id="resumeLink" href="#" style="display:none;">View My Resume</a>
+    </section>
+
+    <!-- Upwork Profile Section -->
+    <section id="upwork">
+        <h2>Upwork Profile</h2>
+        <input type="url" id="upworkLinkInput" placeholder="Enter your Upwork profile link">
+        <button onclick="saveUpworkLink()">Save Link</button>
+        <p id="upworkDisplay"></p>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2>Contact Me</h2>
+        <input type="text" id="contactName" placeholder="Your Name" required>
+        <input type="email" id="contactEmail" placeholder="Your Email" required>
+        <textarea id="contactMessage" placeholder="Your Message" required></textarea>
+        <button onclick="sendContact()">Send</button>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog">
+        <h2>Blog</h2>
+        <textarea id="blogInput" placeholder="Write your blog post here..."></textarea>
+        <button onclick="addBlogPost()">Add Blog Post</button>
+        <div id="blogPosts"></div>
+    </section>
+
+    <script>
+        // Function to update About Me section
+        function updateAbout() {
+            const aboutText = document.getElementById('aboutText').value;
+            document.getElementById('aboutDisplay').innerText = aboutText;
+            document.getElementById('aboutText').value = ''; // Clear the textarea
+        }
+
+        // Function to upload resume
+        function uploadResume() {
+            const resumeInput = document.getElementById('resumeInput');
+            const resumeLink = document.getElementById('resumeLink');
+            if (resumeInput.files.length > 0) {
+                const file = resumeInput.files[0];
+                resumeLink.href = URL.createObjectURL(file);
+                resumeLink.innerText = "View My Resume";
+                resumeLink.style.display = "block"; // Show link
+                resumeInput.value = ''; // Clear the input
+            }
+        }
+
+        // Function to save Upwork link
+        function saveUpworkLink() {
+            const upworkLink = document.getElementById('upworkLinkInput').value;
+            document.getElementById('upworkDisplay').innerHTML = `<a href="${upworkLink}" target="_blank">${upworkLink}</a>`;
+        }
+
+        // Function to send contact message (simulated)
+        function sendContact() {
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const message = document.getElementById('contactMessage').value;
+            alert(`Message sent!\nName: ${name}\nEmail: ${email}\nMessage: ${message}`);
+            // Clear inputs
+            document.getElementById('contactName').value = '';
+            document.getElementById('contactEmail').value = '';
+            document.getElementById('contactMessage').value = '';
+        }
+
+        // Function to add blog post
+        function addBlogPost() {
+            const blogInput = document.getElementById('blogInput').value;
+            if (blogInput) {
+                const blogPosts = document.getElementById('blogPosts');
+                const postDiv = document.createElement('div');
+                postDiv.className = 'blog-post';
+                postDiv.innerText = blogInput;
+                blogPosts.appendChild(postDiv);
+                document.getElementById('blogInput').value = ''; // Clear the input
+            } else {
+                alert("Please write something in the blog!");
+            }
+        }
+
+        // Function to upload profile picture
+        document.getElementById('profilePicInput').addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    document.getElementById('profilePic').src = event.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>
